@@ -1,1 +1,4 @@
+# Ingnore this folders
 venv
+cache/
+data/
