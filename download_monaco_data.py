@@ -75,7 +75,7 @@ for year in years:
         missing_grid = merged['GridPosition'].isna()
         if missing_grid.any():
             n = missing_grid.sum()
-            print(f"  ⚠  Filling {n} missing GridPosition(s) from QualifyingPosition")
+            print(f"  Filling {n} missing GridPosition(s) from QualifyingPosition")
             merged.loc[missing_grid, 'GridPosition'] = \
                 merged.loc[missing_grid, 'QualifyingPosition']
 
@@ -84,27 +84,27 @@ for year in years:
             'FinishPosition', 'QualifyingPosition', 'Year'
         ]]
 
-        print(f"  ✓  {len(merged)} drivers loaded | NaNs: {merged.isna().sum().sum()}")
+        print(f"{len(merged)} drivers loaded | NaNs: {merged.isna().sum().sum()}")
         all_data.append(merged)
 
     except Exception as e:
-        print(f"  ✗  FAILED for {year}: {e}")
+        print(f"FAILED for {year}: {e}")
         failed_years.append(year)
 
 # ── Final assembly ────────────────────────────────────────
 if not all_data:
-    print("\n❌ No data loaded at all. Check your internet/cache and FastF1 version.")
+    print("\nNo data loaded at all. Check your internet/cache and FastF1 version.")
 else:
     final_df = pd.concat(all_data, ignore_index=True)
 
     for col in ['GridPosition', 'FinishPosition', 'QualifyingPosition']:
         final_df[col] = pd.to_numeric(final_df[col], errors='coerce')
 
-    print(f"\n✅ Dataset ready: {len(final_df)} rows across {final_df['Year'].nunique()} years")
+    print(f"\nDataset ready: {len(final_df)} rows across {final_df['Year'].nunique()} years")
     print(f"   NaN summary:\n{final_df.isnull().sum()}")
 
     if failed_years:
-        print(f"\n⚠  These years failed and are NOT in the CSV: {failed_years}")
+        print(f"\n  These years failed and are NOT in the CSV: {failed_years}")
 
     final_df.to_csv('monaco_data_clean.csv', index=False)
     print("\nSaved → monaco_data_clean.csv")
