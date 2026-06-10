@@ -3,3 +3,4 @@ venv
 cache/
 data/
 .ipynb_checkpoints/
+models/
