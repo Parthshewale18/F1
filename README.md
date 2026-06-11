@@ -8,7 +8,7 @@ The project uses historical F1 data for feature engineering, trains an XGBoost c
 
 ### Home Page
 
-<img width="561" height="627" alt="Capture" src="assets/screenshots/home-page.png" />
+<img width="1719" height="898" alt="home-page" src="https://github.com/user-attachments/assets/735662e4-fd68-425d-9e83-0d1de44133ad" />
 
 ### Prediction Results
 
