@@ -11,6 +11,23 @@ st.set_page_config(
     layout="wide",
 )
 
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-image: linear-gradient(rgba(14, 17, 23, 0.85), rgba(14, 17, 23, 0.95)), 
+                          url("https://media.craiyon.com/2025-07-08/cYi7RJ1kRiu4Y-DgIxJFww.webp");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # LOAD ARTIFACTS
 
 @st.cache_resource
@@ -92,7 +109,7 @@ def build_race_features(quali_df, history_df, circuit_id):
             win_rate = 0
         driver_points = driver_hist['points'].sum()
         constructor_points = constructor_hist['points'].sum()
-        construtor_avg_points_last3 = (constructor_hist.groupby('race_id') ['points'].sum().tail(3).mean())
+        constructor_avg_points_last3 = (constructor_hist.groupby('race_id') ['points'].sum().tail(3).mean())
         try:
             driver_encoded = ( le_driver.transform([driver])[0] )
         except:
@@ -108,20 +125,20 @@ def build_race_features(quali_df, history_df, circuit_id):
         except:
             circuit_encoded = -1
         rows.append({
-            'driver_name': driver,
-            'constructor_name': constructor,
-            'grid_position': row['grid_position'],
-            'quali_position': row['quali_position'],
-            'avg_finish_last3': avg_finish_last3,
-            'avg_points_last3': avg_points_last3,
-            'dnf_rate': dnf_rate,
-            'win_rate': win_rate,
-            'driver_points': driver_points,
-            'constructor_points': constructor_points,
-            'construtor_avg_points_last3': construtor_avg_points_last3,
-            'driver_encoded': driver_encoded,
-            'constructor_encoded': constructor_encoded,
-            'circuit_encoded': circuit_encoded
+             "driver_name": driver,
+             "constructor_name": constructor,
+             "grid_position": row["grid_position"], 
+             "quali_position": row["quali_position"],
+             "driver_avg_finish_last3": avg_finish_last3,
+             "driver_avg_points_last3": avg_points_last3,
+             "constructor_avg_points_last3": constructor_avg_points_last3,
+             "driver_win_rate_at_circuit": win_rate,
+             "driver_dnf_rate": dnf_rate,
+             "driver_points_so_far": driver_points,
+             "constructor_points_so_far": constructor_points,
+             "driver_encoded": driver_encoded,
+             "constructor_encoded": constructor_encoded,
+             "circuit_encoded": circuit_encoded
         })
     pred_df = pd.DataFrame(rows)
     pred_df["driver_avg_finish_last3"] = ( pred_df["driver_avg_finish_last3"].fillna(20) )
@@ -180,3 +197,18 @@ if st.button("Load Qualifing Results"):
         st.session_state['quali_df'] = quali_df
     except Exception as e:
         st.error(f"Error loading qualifying data: {e}")
+
+# PREDICT
+
+if ("quali_df" in st.session_state and st.button("Predict Race Winner")):
+    circuit_id = RACE_TO_CIRCUIT[race_name]
+    feature_df = build_race_features(st.session_state['quali_df'], history_df, circuit_id)
+    X_pred = feature_df[features]
+    feature_df['win_probability'] = ( model.predict_proba(X_pred)[:, 1] )
+    predictions = feature_df[['driver_name', 'constructor_name', 'grid_position', 'win_probability']]. sort_values(by='win_probability', ascending=False)
+    st.subheader("Predicted Winning Probabilities")
+    winner = predictions.iloc[0]
+    st.success(f"🏆 Predicted winner: {winner['driver_name']} ({winner['constructor_name']})")
+    st.metric( "Win Probability", f"{winner['win_probability']:.2%}")
+    st.subheader( "Predicted Driver Rankings" )
+    st.dataframe( predictions, use_container_width=True )
