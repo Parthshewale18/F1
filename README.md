@@ -12,8 +12,7 @@ The project uses historical F1 data for feature engineering, trains an XGBoost c
 
 ### Prediction Results
 
-<img width="561" height="627" alt="Capture" src="assets/screenshots/prediction-results.png" />
-
+<img width="1667" height="843" alt="prediction-results" src="https://github.com/user-attachments/assets/619b1130-84fe-4a50-9fa2-fa28ed21f1ac" />
 
 
 ## Features
