@@ -8,11 +8,11 @@ The project uses historical F1 data for feature engineering, trains an XGBoost c
 
 ### Home Page
 
-![F1 Race Winner Predictor Home](assets/screenshots/home-page.png)
+<img width="561" height="627" alt="Capture" src="assets/screenshots/home-page.png" />
 
 ### Prediction Results
 
-![Predicted Winning Probabilities](assets/screenshots/prediction-results.png)
+<img width="561" height="627" alt="Capture" src="assets/screenshots/prediction-results.png" />
 
 
 
