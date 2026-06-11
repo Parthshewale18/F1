@@ -4,6 +4,18 @@ A Streamlit web app that predicts Formula 1 race winner probabilities from quali
 
 The project uses historical F1 data for feature engineering, trains an XGBoost classification model, and serves predictions through an interactive Streamlit interface.
 
+## Screenshots
+
+### Home Page
+
+![F1 Race Winner Predictor Home](assets/screenshots/home-page.png)
+
+### Prediction Results
+
+![Predicted Winning Probabilities](assets/screenshots/prediction-results.png)
+
+
+
 ## Features
 
 - Fetches qualifying results with FastF1.
