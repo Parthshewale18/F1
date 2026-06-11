@@ -178,4 +178,4 @@ Predictions require qualifying results. If qualifying has not happened yet, Fast
 
 ## License
 
-This project is for learning and portfolio use. Add a license file if you plan to distribute or publish it publicly.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
