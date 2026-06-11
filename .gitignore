@@ -1,6 +1,10 @@
 # Ingnore this folders
-venv
 cache/
 data/
 .ipynb_checkpoints/
 models/
+
+# Virtual Environments
+venv/
+env/
+.venv/
