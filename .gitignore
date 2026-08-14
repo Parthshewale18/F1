@@ -2,7 +2,7 @@
 cache/
 data/
 .ipynb_checkpoints/
-models/
+
 
 # Virtual Environments
 venv/
