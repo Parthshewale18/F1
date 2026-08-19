@@ -34,7 +34,7 @@ bundle = get_bundle()
 # QUALIFYING FETCHER (Streamlit-cached wrapper around predictor.load_qualifing)
 @st.cache_data(show_spinner=False)
 def load_qualifing_cached(season, race_name):
-    return predictor.load_qualifing(season, race_name)
+    return predictor.load_qualifying(season, race_name)
 
 # UI
 st.title("🏎️ F1 Race Winner Predictor")
