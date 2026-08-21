@@ -19,6 +19,12 @@ def load_model():
         print(f"Error loading model: {e}")
         bundle = None
 
+@app.get("/")
+def root():
+    return {
+        "message": "F1 Race Winner Predictor API is running. Visit /docs to try it out."
+        }
+
 @app.get("/health")
 def health():
     return {
