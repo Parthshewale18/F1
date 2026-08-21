@@ -1,6 +1,12 @@
 # Ingnore this folders
 cache/
-data/
+data/cache/*
+data/raw/*
+data/processed/*
+
+# Added f1_eda_ready.csv to the repository
+!data/processed/f1_eda_ready.csv
+
 .ipynb_checkpoints/
 
 
